@@ -18,6 +18,20 @@ public class BookPrice {
     @Column(name = "offer")
     private Double offer;
 
+    public BookPrice(Double offer, Double price, Integer bookId) {
+        this.offer = offer;
+        this.price = price;
+        this.bookId = bookId;
+    }
+
+    public BookPrice() {
+    }
+
+    public BookPrice(Double offer, Double price) {
+        this.offer = offer;
+        this.price = price;
+    }
+
     public Integer getBookId() {
         return bookId;
     }
