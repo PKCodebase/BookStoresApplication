@@ -2,6 +2,7 @@ package com.bookstore.entity;
 
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,9 +14,11 @@ public class BookPrice {
     private Integer bookId;
 
     @Column(name = "book_price")
+    @Schema(description = "Book Price", example = "kaushik Prasad")
     private Double price;
 
     @Column(name = "offer")
+    @Schema(name = "offer", example = "10%")
     private Double offer;
 
     public BookPrice(Double offer, Double price, Integer bookId) {
