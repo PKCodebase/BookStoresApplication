@@ -1,6 +1,7 @@
 package com.bookstore.service.impl;
 
 import com.bookstore.entity.BookPrice;
+import com.bookstore.exception.ResourceNotFoundException;
 import com.bookstore.repository.BookPriceRepository;
 import com.bookstore.service.BookPriceService;
 import org.springframework.stereotype.Service;
@@ -18,23 +19,18 @@ public class BookPriceServiceImpl implements BookPriceService {
 
     @Override
     public BookPrice getBookById(Integer bookId) {
-       BookPrice bookPrice =bookPriceRepository.findById(bookId).
-               orElseThrow(() -> new RuntimeException("Book not found"));
-         return bookPrice;
+        return bookPriceRepository.findById(bookId)
+                .orElseThrow(() -> new ResourceNotFoundException("Book with ID " + bookId + " not found"));
     }
 
     @Override
-    public double getOfferBookPriceById(Integer bookId) {
-        Optional<BookPrice> bookPriceOptional = bookPriceRepository.findById(bookId);
-        double offeredPrice = 0.0;
-        if (bookPriceOptional.isPresent()) {
-            BookPrice bookPrice = bookPriceOptional.get();
-            double actualPrice = bookPrice.getPrice();
-            double offer = bookPrice.getOffer();
-            double discount = actualPrice * (offer / 100);
-            offeredPrice =  actualPrice - discount;
+    public double getOfferPriceById(Integer bookId) {
+        BookPrice bookPrice = bookPriceRepository.findById(bookId)
+                .orElseThrow(() -> new ResourceNotFoundException("No any offer available with " + bookId ));
 
-        }
-        return offeredPrice;
+        double actualPrice = bookPrice.getPrice();
+        double offer = bookPrice.getOffer();
+        double discount = actualPrice * (offer / 100);
+        return actualPrice - discount;
     }
 }

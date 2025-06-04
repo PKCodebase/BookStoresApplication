@@ -8,5 +8,5 @@ public interface BookPriceService {
 
     BookPrice getBookById(Integer bookId);
 
-    double getOfferBookPriceById(Integer bookId);
+    double getOfferPriceById(Integer bookId);
 }
